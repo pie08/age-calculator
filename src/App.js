@@ -69,7 +69,12 @@ export default function App() {
           formError={formError}
         />
       </InputForm>
-      <DisplayAge age={age} />
+
+      <DisplayAge>
+        <AgeText age={age} period="years" />
+        <AgeText age={age} period="months" />
+        <AgeText age={age} period="days" />
+      </DisplayAge>
     </div>
   );
 }
@@ -104,22 +109,21 @@ function FormGroup({ placeholder, formError, type, state, onSetState }) {
         }
         style={formError?.type === type ? { border: "1px solid red" } : {}}
       />
-      {formError?.type === type && <p className="error">{formError.message}</p>}
+      {formError?.type === type && <FormError error={formError} />}
     </div>
   );
 }
 
-function DisplayAge({ age }) {
+function FormError({ error }) {
+  return <p className="error">{error.message}</p>;
+}
+
+function DisplayAge({ children }) {
   return (
     <div className="calculator__display-age">
-      <h1>
-        <span className="calculator__age-number">
-          {age.years >= 0 ? age.years : "--"}
-        </span>{" "}
-        Years
-      </h1>
+      {children}
 
-      <h1>
+      {/* <h1>
         <span className="calculator__age-number">
           {age.months >= 0 ? age.months : "--"}
         </span>{" "}
@@ -131,7 +135,18 @@ function DisplayAge({ age }) {
           {age.days >= 0 ? age.days : "--"}
         </span>{" "}
         Days
-      </h1>
+      </h1> */}
     </div>
+  );
+}
+
+function AgeText({ age, period }) {
+  return (
+    <h1>
+      <span className="calculator__age-number">
+        {age[period] >= 0 ? age[period] : "--"}
+      </span>
+      {period.slice(0, 1).toUpperCase().concat(period.slice(1))}
+    </h1>
   );
 }

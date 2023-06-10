@@ -61,9 +61,11 @@
 
   &__age-number {
     color: $color-purple;
+    margin-right: 2.4rem;
 
     @media (max-width: 700px) {
       display: block;
+      margin-bottom: -2.4rem;
     }
   }
 }
