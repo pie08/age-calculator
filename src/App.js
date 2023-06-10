@@ -44,83 +44,40 @@ export default function App() {
 
   return (
     <div className="calculator">
-      <InputForm
-        day={day}
-        month={month}
-        year={year}
-        onSetDay={setDay}
-        onSetMonth={setMonth}
-        onSetYear={setYear}
-        onSubmit={handleSubmit}
-        formError={formError}
-      />
+      <InputForm onSubmit={handleSubmit}>
+        <FormGroup
+          type="day"
+          state={day}
+          onSetState={setDay}
+          placeholder="DD"
+          formError={formError}
+        />
+
+        <FormGroup
+          type="month"
+          state={month}
+          onSetState={setMonth}
+          placeholder="MM"
+          formError={formError}
+        />
+
+        <FormGroup
+          type="year"
+          state={year}
+          onSetState={setYear}
+          placeholder="YYYY"
+          formError={formError}
+        />
+      </InputForm>
       <DisplayAge age={age} />
     </div>
   );
 }
 
-function InputForm({
-  day,
-  month,
-  year,
-  onSetDay,
-  onSetMonth,
-  onSetYear,
-  onSubmit,
-  formError,
-}) {
+function InputForm({ children, onSubmit }) {
   return (
     <form className="calculator__form" onSubmit={onSubmit}>
-      <div className="form__group">
-        <label for="days">Day</label>
-        <input
-          type="number"
-          id="day"
-          placeholder="DD"
-          value={day}
-          onChange={(e) =>
-            onSetDay(+e.target.value !== 0 ? e.target.value : "")
-          }
-          style={formError?.type === "day" ? { border: "1px solid red" } : {}}
-        />
-        {formError?.type === "day" && (
-          <p className="error">{formError.message}</p>
-        )}
-      </div>
-
-      <div className="form__group">
-        <label for="month">Month</label>
-        <input
-          type="number"
-          id="month"
-          placeholder="MM"
-          value={month}
-          onChange={(e) =>
-            onSetMonth(+e.target.value !== 0 ? e.target.value : "")
-          }
-          style={formError?.type === "month" ? { border: "1px solid red" } : {}}
-        />
-        {formError?.type === "month" && (
-          <p className="error">{formError.message}</p>
-        )}
-      </div>
-
-      <div className="form__group">
-        <label for="year">Year</label>
-        <input
-          type="number"
-          id="year"
-          placeholder="YYYY"
-          value={year}
-          onChange={(e) =>
-            onSetYear(+e.target.value !== 0 ? e.target.value : "")
-          }
-          style={formError?.type === "year" ? { border: "1px solid red" } : {}}
-        />
-        {formError?.type === "year" && (
-          <p className="error">{formError.message}</p>
-        )}
-      </div>
+      {children}
 
       <span className="line">&nbsp;</span>
 
@@ -128,6 +85,27 @@ function InputForm({
         <img src="./assets/images/icon-arrow.svg" alt="arrow icon" />
       </button>
     </form>
+  );
+}
+
+function FormGroup({ placeholder, formError, type, state, onSetState }) {
+  return (
+    <div className="form__group">
+      <label for={type}>
+        {type.slice(0, 1).toUpperCase().concat(type.slice(1))}
+      </label>
+      <input
+        type="number"
+        id={type}
+        placeholder={placeholder}
+        value={state}
+        onChange={(e) =>
+          onSetState(+e.target.value !== 0 ? e.target.value : "")
+        }
+        style={formError?.type === type ? { border: "1px solid red" } : {}}
+      />
+      {formError?.type === type && <p className="error">{formError.message}</p>}
+    </div>
   );
 }
 
