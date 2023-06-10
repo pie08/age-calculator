@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  // Set 1 rem = to 10px
+  font-size: 62.5%;
+  @media (max-width: 1000px) {
+    font-size: 50%;
+  }
+}
+
+$color-white: #fff;
+$color-off-white: hsl(0, 0%, 94%);
+$color-light-grey: hsl(0, 0%, 86%);
+$color-smokey-grey: hsl(0, 1%, 44%);
+$color-off-black: hsl(0, 0%, 8%);
+$color-purple: hsl(259, 100%, 65%);
+$color-light-red: hsl(0, 100%, 67%);
+
+#root {
+  background-color: $color-off-white;
+  min-height: 100vh;
+  padding: 4.8rem;
+
+  display: flex;
+  grid-template-columns: max-content;
+  place-items: center;
+  justify-content: center;
+}
